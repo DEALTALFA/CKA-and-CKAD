@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: myweb-deploy
+spec:
+    replicas: 3
+    selector: 
+        matchLabels:
+            env: prod
+        matchExpressions:
+            - {key: team, operator: In, values: [team3, team4]}
+            - {key: tier, operator: In, values: [frontend]}
+    template:
+        metadata:
+            name: "webpod2"
+            labels:
+                env: prod
+                team: team3
+                tier: frontend
+        spec:
+            containers:
+            - name: "webc3"
+              image: "ankit45devops/ankit"

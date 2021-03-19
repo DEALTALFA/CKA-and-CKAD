@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb-deploy
+spec:
+  type: recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      env: prod
+    matchExpressions:
+      - { key: team, operator: In, values: [ team1, team2 ] }
+      - { key: tier, operator: In, values: [ frontend ] }
+  template:
+    metadata:
+      name: "webpod4"
+      labels:
+        env: prod
+        team: team1
+        tier: frontend
+
+    spec:
+      containers:
+      - name: "webc1"
+        image: "vimal13/apache-webserver-php"
